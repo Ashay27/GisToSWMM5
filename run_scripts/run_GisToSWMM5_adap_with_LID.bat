@@ -26,7 +26,9 @@ REM This is an example script to run GisToSWMM5 in adaptive mode on Windows
 ..\demo_catchment\data\table_report.csv ^
 ..\demo_catchment\data\table_symbols.csv ^
 ..\demo_catchment\out\SWMM_in\demo_catchment_adap ^
-1
+1 ^
+..\demo_catchment\data\data_lid_controls.txt ^
+..\demo_catchment\data\raster_lid.asc
 
 REM Wait for user input before closing terminal
 REM pause
