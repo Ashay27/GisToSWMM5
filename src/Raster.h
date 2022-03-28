@@ -4,6 +4,12 @@
 #include <cstdlib> 
 #endif
 
+#ifndef _CMATH_H_
+#define _CMATH_H_
+#include <C:\Users\shah016\PycharmProjects\GisToSWMM5\venv\Lib\site-packages\pandas\_libs\src\headers\cmath>
+//if it does not work, hardcode your cmath path here
+#endif
+
 // gcc
 #ifndef _MATH_H_
 #define _MATH_H_

@@ -4,6 +4,12 @@
 #include <cstdlib>
 #endif
 
+#ifndef _CMATH_H_
+#define _CMATH_H_
+#include <C:\Users\shah016\PycharmProjects\GisToSWMM5\venv\Lib\site-packages\pandas\_libs\src\headers\cmath>
+//if it does not work, hardcode your cmath path here
+#endif
+
 // gcc
 #ifndef _MATH_H_
 #define _MATH_H_
@@ -65,6 +71,8 @@
 #include <numeric>
 #endif
 
+#include <iostream>
+#include <fstream>
 
 class Grid
 {
@@ -84,6 +92,7 @@ class Grid
 		void setCellElevations(Raster &demRaster);
 		void setCellFlowdirs(Raster &flowdirRaster);
 		void setCellLanduse(Raster &landuseRaster);
+		void setCellLidType(Raster &lidRaster);
 		void computeGridExtents();
 		void setSubcatchmentProperties(Table &catchPropTable);
 		void findCellNeighbours();
@@ -95,6 +104,7 @@ class Grid
 		void routePitCells();
 		std::vector<int> findRouted(Table &juncTable, std::string &path);
 		void simplify(Table &juncTable, std::string &path);
+		void simplifyLID(Table &juncTable, std::string &path);
 		void saveRaster(std::string path);
 		int saveSubcatchmentPolygon(std::string path);
 		void saveSubcatchmentRouting(std::string path);
@@ -105,7 +115,7 @@ class Grid
                      Table &inflowsTable, Table &timeseriesTable, Table &reportTable, Table &snowpacksTable, Table &raingagesTable,
                      Table &symbolsTable, Table &juncTable, Table &outfallsTable, Table &condTable, Table &pumpsTable,
                      Table &pumpCurvesTable, Table &dwfTable, Table &patternsTable, Table &lossesTable, Table &storageTable,
-                     Table &xsectionTable, std::string path);
+                     Table &xsectionTable, Table &lidControlsTable, std::string path);
 		void printReport(Table &catchPropTable);
 		void printReport(Table &catchPropTable, std::vector<int> routedIDs);
 		void computeHistogram(std::vector<std::string> &catLabels, std::vector<int> &catCount,

@@ -44,6 +44,19 @@ void Table::writeToStringStream(std::stringstream &sstream)
 	}
 }
 
+int Table::loadFileName(std::string pathNameNew)
+{
+	// Load file name and save it to the struct.
+	pathName = pathNameNew;
+	nCols = 1;
+	nRows = 1;
+	std::cout << "\n-> Loading file name and save it to the struct";
+	data = new std::string[nCols * nRows];
+	data[0] = pathName.c_str();
+
+	return 0;
+}
+
 int Table::load(std::string pathNameNew)
 {
 	// Load raster and save it to the struct.

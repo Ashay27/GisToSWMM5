@@ -6,6 +6,7 @@
 // Number of command line parameters.
 const int regGridParams = 25;
 const int adapGridParams = 26;
+const int adapGridParamsLID = 28;
 const int adapGridParamsOld = 27;
 
 int main (int argc, char* cArgv[])
@@ -29,7 +30,7 @@ int main (int argc, char* cArgv[])
         std::cout << "\n-> Argument " << i << ": " << cArgv[i];
     }
 
-    if (argc == regGridParams || argc == adapGridParams || argc == adapGridParamsOld)
+    if (argc == regGridParams || argc == adapGridParams || argc == adapGridParamsOld || argc == adapGridParamsLID)
     {
         std::cout << "\n\nLoading data:";
 
@@ -148,6 +149,19 @@ int main (int argc, char* cArgv[])
         Table symbolsTable;
         int resSymbols = symbolsTable.load( cArgv[23] );
 
+        Table lidControlsTable;
+        Raster lidRaster;
+        int resLidControls = 1, resLidType = 1;
+        if (argc == adapGridParamsLID){
+            // Load LID controls table.
+            std::cout << "\n-> Loading input file LID controls table";
+            resLidControls = lidControlsTable.loadFileName( cArgv[26] );
+
+            // Load the LID type raster file.
+            std::cout << "\n-> Loading LID type raster";
+            resLidType = lidRaster.load( cArgv[27] );
+        }
+
         if (resDem == 0 && resLanduse == 0 && resCatchProp == 0 && resCatchProp == 0 &&
                 resCond == 0 && resOutfalls == 0 && resHeader == 0 && resEvaporation == 0 &&
                 resTemperature == 0 && resRaingages == 0 && resInflows == 0 && resTimeseries == 0
@@ -161,7 +175,7 @@ int main (int argc, char* cArgv[])
             Grid grid;
             int resDiscretization = 1;
 
-            if (argc == regGridParams || argc == adapGridParams)
+            if (argc == regGridParams || argc == adapGridParams || argc == adapGridParamsLID)
             {
                 // Print discretization method.
                 std::cout << "\n-> Discretizing the area with a regular grid";
@@ -214,6 +228,14 @@ int main (int argc, char* cArgv[])
                 // Set cell landuse.
                 std::cout << "\n-> Setting cell landuses";
                 grid.setCellLanduse(landuseRaster);
+
+                if (argc == adapGridParamsLID && resLidType == 0){
+                    // Set cell LID type.
+                    std::cout << "\n-> Setting cell LID type";
+                    grid.setCellLidType(lidRaster);
+                } else{
+                    std::cout << "\nAll LID types are set to 'NONE' by default";
+                }
             }
 
             // Compute active grid extents.
@@ -303,13 +325,39 @@ int main (int argc, char* cArgv[])
                 }
             }
 
+            // Simplify subcatchments based on common landuse, routing and LID type
+            if (argc == adapGridParamsLID)
+            {
+                std::cout << "\n-> Creating adaptive subcatchments based on landuse, routing and LID type";
+                std::string outNameAdapSubcatchments(cArgv[24]);
+                outNameAdapSubcatchments += "_subcatchments";
+                grid.simplifyLID(juncTable, outNameAdapSubcatchments);
+
+                // Create and save a WKT vector file of subcatchment routing in adaptive grid
+                std::cout << "\n-> Creating adaptive subcatchment routing file for inspection";
+                std::string outNameSubcatchmentRouting(cArgv[24]);
+                outNameSubcatchmentRouting += "_subcatchment_routing";
+                grid.saveSubcatchmentRouting(outNameSubcatchmentRouting);
+
+                std::cout << "\n-> Creating a file of routed adaptive subcatchments for inspection";
+                std::string outNameAdapSubcatchmentAttr(cArgv[24]);
+                outNameAdapSubcatchmentAttr += "_subcatchments_attr";
+                int resSaveSimple = grid.saveSubcatchmentPolygon(outNameAdapSubcatchmentAttr);
+                if (resSaveSimple != 0)
+                {
+                    std::cout << "\n-> Error in creating an adaptive subcatchment routing file for inspection.";
+
+                    return 1;
+                }
+            }
+
             // Create the SWMM5 file.
             std::cout << "\n\nCreating the SWMM5 model input file:";
             grid.saveSWMM5File(headerTable, catchPropTable, evaporationTable, temperatureTable,
                                inflowsTable, timeseriesTable, reportTable, snowpacksTable,
                                raingagesTable, symbolsTable, juncTable, outfallsTable, condTable,
                                pumpsTable, pumpCurvesTable, dwfTable, patternsTable, lossesTable,
-                               storageTable, xsectionTable, cArgv[24]);
+                               storageTable, xsectionTable, lidControlsTable, cArgv[24]);
 
             // Print report.
             std::cout << "\n\nReport:";
@@ -318,6 +366,12 @@ int main (int argc, char* cArgv[])
             if (argc == adapGridParams)
             {
                 grid.printReport(catchPropTable);
+            }
+            else if (argc == adapGridParamsLID)
+            {
+                // Todo: Add details about LID in the printReport
+                grid.printReport(catchPropTable);
+               
             }
             else
             {
@@ -447,7 +501,7 @@ int main (int argc, char* cArgv[])
     }
     else
     {
-        std::cout << "\nError, number of command line arguments should be " << regGridParams << " or " << adapGridParams << " or " << adapGridParamsOld;
+        std::cout << "\nError, number of command line arguments should be " << regGridParams << " or " << adapGridParams << " or " << adapGridParamsOld << " or " << adapGridParamsLID;
 
         return 1;
     }

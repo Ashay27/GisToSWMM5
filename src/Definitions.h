@@ -13,3 +13,6 @@
 #define ROOF_UNCONNECTED 20 // Has to be greater than ROOF_CONNECTED
 #define BUILT_AREA 30       // Has to be greater than ROOF_UNCONNECTED
 #define NATURAL_AREA 60     // Has to be greater than BUILT_AREA
+
+#define MIN_WATER_USE 65    // For different water usages in the arealike river, lakes, canals, ponds etc.
+#define MAX_WATER_USE 69    // Land uses (65,66,67,68,69) would not be connected to a junction

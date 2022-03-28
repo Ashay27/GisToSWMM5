@@ -10,6 +10,7 @@ class Table : public FileIO
 		Table();
 		~Table();
 		int load(std::string sPath);
+		int loadFileName(std::string pathName);
 		int save(std::string sPath);
 		void print();
 		std::string getData(int row, int col);
