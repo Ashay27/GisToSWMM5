@@ -1,2 +1,2 @@
-Gage,Format,Interval,SCF,Source    ,Path,Station name,Units
-STA01,VOLUME,00:01,1,FILE,"../../GisToSWMM5/demo_catchment/data/prec_mm.DAT",STA01,MM
+Gage,Format,Interval,SCF,Source,Source name
+STA01,VOLUME,00:15,1,TIMESERIES,TS-day

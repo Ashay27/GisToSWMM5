@@ -1,0 +1,31 @@
+[LID_CONTROLS]
+;;Name           Type/Layer Parameters
+;;-------------- ---------- ----------
+GR01             GR
+GR01             SURFACE    50         0.0        0.1        1.0        5         
+GR01             SOIL       152        0.5        0.3        0.1        2540       10.0       76        
+GR01             DRAINMAT   3          0.5        0.1       
+
+RG01             RG
+RG01             SURFACE    200        0.0        0.1        0          5         
+RG01             SOIL       900        0.5        0.2        0.1        100        10.0       76        
+RG01             STORAGE    0          0.75       0.5        0         
+
+PP01             PP
+PP01             SURFACE    2.54       0.0        0.017      1.0        5         
+PP01             PAVEMENT   150        0.15       0          800        0          0          0         
+PP01             SOIL       254        0.25       0.15       0.05       400        10.0       76        
+PP01             STORAGE    520        0.4        0.5        0         
+PP01             DRAIN      0          0          0          0          0          0                         
+
+PP02             PP
+PP02             SURFACE    2.54       0.0        0.017      1.0        5         
+PP02             PAVEMENT   150        0.15       0.9        6833       0          0          0         
+PP02             SOIL       254        0.35       0.25       0.10       445        10         76        
+PP02             STORAGE    520        0.4        0.5        0         
+PP02             DRAIN      0          0          0          0          0          0                    
+
+RB01             RB
+RB01             STORAGE    800        0.75       0.5        0         
+RB01             DRAIN      0          0.5        6          6          0          0   
+
