@@ -1,0 +1,1 @@
+This directory is not updated and therefore, is same as GIStoSWMM5. The executable file(.exe) of the tool can be extracted from GIStoSWMM5\bin\GIStoSWMM5.exe 
