@@ -1,0 +1,3 @@
+To create node and links data add these file to CaseStudyPy work directory. They work for the case study area to extract relevant info from Dutch data. Therefore, should be changed according to the specific data for the users areas.
+
+To extract data, run the node_data.py first and then the link_data.py. Don't forget to import all the relevant dependencies, and change the path of the input & output files in the code.
