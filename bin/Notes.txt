@@ -1,3 +1,1 @@
-This directory is not updated and therefore, is same as GIStoSWMM5. The executable file(.exe) of the tool can be extracted from GIStoSWMM5\bin\GIStoSWMM5.exe. 
-
 If GIStoSWMM5\bin\GIStoSWMM5.exe gives error, first check the requirements mentioned in GIStoSWMM5 (https://github.com/AaltoUrbanWater/GisToSWMM5/blob/master/input_files.md). After that try to install msys2 (https://www.msys2.org/) and run the .exe file
